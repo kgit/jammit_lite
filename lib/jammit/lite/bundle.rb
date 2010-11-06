@@ -1,22 +1,22 @@
 module Jammit
-  
+
   module Lite
-    
+
     class Bundle
-      
+
       # takes array of files from yaml hash and expands any wilcards
       def self.expand(files)
-        files.inject([]) do |expanded,file| 
+        files.inject([]) do |expanded,file|
           wildcard?(file) ? expanded.concat(expand_wildcard_path(file)) : expanded.push(file)
           expanded
         end
       end
-      
+
       # returns true if given path includes "*"
       def self.wildcard?(path)
         not path.match(/\*/).nil?
       end
-      
+
       # expands paths with wildcards into Array of matching filenames
       def self.expand_wildcard_path(path)
         Dir[Rails.root + path].map { |path| path.gsub("#{Rails.root}/",'') }
@@ -33,12 +33,12 @@ module Jammit
 
       def extension
         case @filetype
-        when :javascripts : 'js'
-        when :stylesheets : 'css'
+        when :javascripts then 'js'
+        when :stylesheets then 'css'
         end
       end
 
-      # returns Array of Jammit::Lite::Files
+      # returns Array of Jammit::Lite::File
       def files
         Jammit::Lite.assets(@filetype)[@name]
       end
@@ -46,8 +46,8 @@ module Jammit
 
 
     end
-    
+
   end
 
-  
+
 end
