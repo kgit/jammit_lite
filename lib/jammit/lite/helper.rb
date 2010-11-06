@@ -11,7 +11,7 @@ module Jammit
       # in production, creates <script> tag for each bundle
       def include_javascripts(*bundles)
         bundles.map! { |name| Jammit::Lite::Bundle.new(:javascripts => name)  }
-        #return include_individual_javascripts(bundles) unless Rails.env.production?
+        return include_individual_javascripts(bundles) unless Rails.env.production?
         tags = bundles.map { |bundle| javascript_include_tag(bundle.path) }
         html_safe(tags.join("\n"))
       end
